@@ -11,18 +11,14 @@ struct APButton: View {
     let title: LocalizedStringKey
     
     var body: some View {
-        Button {
-            
-        } label: {
-            Text(title)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .frame(width: 250, height: 50)
-                .background(.brandPrimary)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-        }
+        
+        Text(title)
+            .font(.title3)
+            .fontWeight(.semibold)
+            .foregroundStyle(.white)
+            .frame(width: 250, height: 50)
+            .background(.brandPrimary)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
