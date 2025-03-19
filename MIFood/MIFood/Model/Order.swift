@@ -16,9 +16,16 @@ final class Order: ObservableObject {
         print("hi")
     }
     
+    
     func deleteItems(at offsets: IndexSet) {
         items.remove(atOffsets: offsets)
     }
+    
+    
+    func clear() {
+        items.removeAll()
+    }
+    
     
     var totalPrice: Double {
         items.reduce(0) { $0 + $1.price }

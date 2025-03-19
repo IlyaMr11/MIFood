@@ -12,7 +12,7 @@ struct XDismisButton: View {
         Image(systemName: "xmark")
             .frame(width: 30, height: 30)
             .background(Color.white.opacity(0.7))
-            .tint(.secondary)
+            .tint(.black)
             .clipShape(Circle())
             .padding(.trailing, 7)
             .padding(.top, 7)

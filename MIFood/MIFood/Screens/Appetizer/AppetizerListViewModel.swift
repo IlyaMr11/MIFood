@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class AppetizerListViewModel: ObservableObject {
+@MainActor final class AppetizerListViewModel: ObservableObject {
     
     @Published var appetizers: [Appetizer] = []
     @Published var alert: AlertItem?
@@ -15,30 +15,57 @@ final class AppetizerListViewModel: ObservableObject {
     @Published var isShowingDetail: Bool = false
     @Published var selectedAppetizer: Appetizer?
     
-    func getAppetizers() {
+//    func getAppetizers() {
+//        isLoading = true
+//        NetworkManager.shared.getAppetizers { [weak self] result in
+//            DispatchQueue.main.async {
+//                self?.isLoading = false
+//                switch result {
+//                case .success(let appetizers):
+//                    self?.appetizers = appetizers
+//                    
+//                case .failure(let error):
+//                    switch error {
+//                    case .invalidURL:
+//                        self?.alert = AlertContext.invalidURL
+//                        
+//                    case .invalidResponse:
+//                        self?.alert = AlertContext.invalidResponse
+//                        
+//                    case .invalidData:
+//                        self?.alert = AlertContext.invalidData
+//                        
+//                    case .unableToComplete:
+//                        self?.alert = AlertContext.unableToComplete
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    func getAppetizers()  {
         isLoading = true
-        NetworkManager.shared.getAppetizers { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success(let appetizers):
-                    self?.appetizers = appetizers
-                    
-                case .failure(let error):
-                    switch error {
+        
+        Task {
+            do {
+                appetizers = try await NetworkManager.shared.getAppetizers()
+                isLoading = false
+            } catch {
+                if let apError = error as? APError {
+                    switch apError {
                     case .invalidURL:
-                        self?.alert = AlertContext.invalidURL
-                        
+                        alert = AlertContext.invalidURL
                     case .invalidResponse:
-                        self?.alert = AlertContext.invalidResponse
-                        
+                        alert = AlertContext.invalidResponse
                     case .invalidData:
-                        self?.alert = AlertContext.invalidData
-                        
+                        alert = AlertContext.invalidData
                     case .unableToComplete:
-                        self?.alert = AlertContext.unableToComplete
+                        alert = AlertContext.unableToComplete
                     }
+                } else {
+                    alert = AlertContext.invalidResponse
                 }
+                isLoading = false
             }
         }
     }
