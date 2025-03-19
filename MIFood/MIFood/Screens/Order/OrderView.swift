@@ -29,7 +29,7 @@ struct OrderView: View {
                         print("order crated")
                         order.clear()
                     } label: {
-                        Text("$\(order.totalPrice, specifier: "%.2f") - Place Holder")
+                        Text("$\(order.totalPrice, specifier: "%.2f") - Create Order")
                     }
                     .modifier(StandartButtonStyle())
                     .padding(.bottom, 25)

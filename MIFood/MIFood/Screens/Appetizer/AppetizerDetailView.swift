@@ -30,6 +30,8 @@ struct AppetizerDetailView: View {
                 Text(appetizer.description)
                     .multilineTextAlignment(.center)
                     .font(.body)
+                    .lineLimit(nil)
+                    .frame(height: 50)
                     .padding()
                 
                 HStack(spacing: 20) {

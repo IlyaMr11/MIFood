@@ -42,6 +42,7 @@ struct AccountView: View {
                     
                     Button {
                         viewModel.saveChanges()
+                        print("i save")
                     } label: {
                         Text("Save Changes")
                     }
@@ -60,6 +61,11 @@ struct AccountView: View {
 
             }
             .navigationTitle("😎 Account")
+            .toolbar {
+                Button("Dismis") {
+                    focusedTextField = nil
+                }
+            }
         }
         .onAppear {
             viewModel.retrieveUser()
@@ -67,9 +73,9 @@ struct AccountView: View {
         .alert(item: $viewModel.alertItem) { alert in
             Alert(title: alert.title, message: alert.message, dismissButton: alert.dismissButton)
         }
-        .onTapGesture {
-            focusedTextField = nil
-        }
+//        .onTapGesture {
+//            focusedTextField = nil
+//        }
     }
 }
 
